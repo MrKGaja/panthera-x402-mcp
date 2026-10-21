@@ -1,0 +1,15 @@
+# Smithery.ai MCP Registry configuration
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      pantheraX402Signature:
+        type: string
+        description: Optional default Solana Mainnet USDC x402 payment signature
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['index.js'],
+      env: config && config.pantheraX402Signature ? { PANTHERA_X402_SIGNATURE: config.pantheraX402Signature } : {}
+    })

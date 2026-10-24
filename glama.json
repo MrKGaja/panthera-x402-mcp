@@ -1,7 +1,4 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
-  "maintainers": ["K-R-PET-EYE-LLP"],
-  "name": "panthera-x402-mcp",
-  "description": "22 pay-per-call x402 v2 tools on Solana Mainnet USDC: OpenAI chat completions, live web search, Solana JSON-RPC, URL-to-Markdown scraper, Solana tx simulator, SPL token rug-pull audit, honeypot threat-intel, and OSINT.",
-  "remoteUrl": "https://rklhfyeyw0.execute-api.ap-south-1.amazonaws.com/mcp"
+  "maintainers": ["MrKGaja"]
 }

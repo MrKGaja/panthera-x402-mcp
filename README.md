@@ -3,7 +3,7 @@
 [![MCP Server](https://glama.ai/mcp/servers/MrKGaja/panthera-x402-mcp/badges/score.svg)](https://glama.ai/mcp/servers/MrKGaja/panthera-x402-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 
-An open-source **Model Context Protocol (MCP)** server written in zero-dependency Node.js (`>= 18`) that implements **22 cybersecurity, OSINT, DNS/TLS inspection, and Solana Mainnet JSON-RPC tools** directly in this repository ([`index.js`](./index.js) and [`src/tools.js`](./src/tools.js)).
+An open-source **Model Context Protocol (MCP)** server written in zero-dependency Node.js (`>= 18`) that implements **36 cybersecurity, OSINT, Dark Web, Multi-Channel Reach, Social Video/Reel, OWASP Skill Auditing, DNS/TLS inspection, and Solana Mainnet JSON-RPC tools** directly in this repository ([`index.js`](./index.js) and [`src/tools.js`](./src/tools.js)).
 
 ---
 
@@ -92,7 +92,7 @@ docker run -i --rm panthera-x402-mcp
 
 ---
 
-## All 22 Open-Source Tools Implemented in `src/tools.js`
+## All 36 Open-Source Tools Implemented in `src/tools.js`
 
 | # | Tool Name | Implementation in `src/tools.js` |
 | :- | :--- | :--- |
@@ -112,12 +112,26 @@ docker run -i --rm panthera-x402-mcp
 | 14 | `panthera_ip_fraud_score` | Calculates a composite fraud & bot score (`0-100`) from ASN, ISP, and reverse DNS telemetry. |
 | 15 | `panthera_bulk_check_ips` | Batch-audits up to 100 IPv4/IPv6 addresses concurrently. |
 | 16 | `panthera_email_breach_check` | Computes Gravatar MD5 identity hashes and audits the email domain's MX/SPF/DMARC security posture. |
-| 17 | `panthera_darkweb_search` | Generates Tor `.onion` hidden-service search descriptors via the Ahmia index. |
+| 17 | `panthera_darkweb_search` | Queries 4 Dark Web & Breach engines (`Hudson Rock Cavalier`, `XposedOrNot`, `ProxyNova COMB`, and `Ahmia.fi` Tor `.onion` hidden services). |
 | 18 | `panthera_reverse_image_osint` | Inspects image HTTP headers (`content-type`, `content-length`) and builds Google Lens, Yandex, and TinEye OSINT pivot URLs. |
 | 19 | `panthera_webhook_inbox` | Creates and polls ephemeral 24-hour webhook inboxes (`create`, `push`, `poll`) for NAT/sandboxed agents. |
 | 20 | `panthera_threat_intel_feed` | Retrieves active honeypot scanner signatures and x402 security manifest metadata. |
 | 21 | `panthera_chat_completions` | Security-focused assistant completion handler with tool recommendations. |
 | 22 | `panthera_unban_ip` | Prepares and submits an IP quarantine clearance request with optional Solana x402 transaction signature. |
+| 23 | `panthera_video_process` | **Panthera ReelSight™** "One Call and Boom" Social Video & Reel Unlocker (Instagram Reels, TikTok, X, Shorts -> Whisper transcript + Vision OCR + linked GitHub repos). |
+| 24 | `panthera_video_job_status` | Polls video processing job status and retrieves full transcript, keyframes, and schema output. |
+| 25 | `panthera_agent_reach` | **Panthera Omni-Reach™** Universal Multi-Channel Unlocker across Instagram, X/Twitter, TikTok, YouTube, Reddit, GitHub & Web. |
+| 26 | `panthera_publisher_read` | Publisher Tollbooth Reader for licensed publisher articles (`preview`, `summary`, `full` Markdown). |
+| 27 | `panthera_search_tools` | **Code-Mode Discovery** (0 USDC): Searches all 36 Panthera tools by keyword without bloating LLM context. |
+| 28 | `panthera_execute_code_mode` | **Code-Mode Sandbox Executor**: Runs multi-step tool pipelines in a single round-trip. |
+| 29 | `panthera_hydra_search` | **Panthera HydraSearch™**: Parallel 4-engine search aggregator across GitHub, Reddit, HackerNews, and Deep Web. |
+| 30 | `panthera_skill_shield` | **Panthera SkillShield™**: Autonomous Agent & MCP pre-execution OWASP security auditor (`SKILL.md` & repo scanner). |
+| 31 | `panthera_signal_zero` | **Panthera SignalZero™**: High-signal alert deduplicator and automated telemetry noise filter. |
+| 32 | `panthera_hook_pulse` | **Panthera HookPulse™**: Conversion copy retention scorer (26 formulas) and anti-slop humanizer. |
+| 33 | `panthera_schema_forge` | **Panthera SchemaForge™**: Zero-prompt DOM-to-JSON schema compiler. |
+| 34 | `panthera_action_dom` | **Panthera ActionDOM™**: Headless interactive element & action-tree distiller for browser agents. |
+| 35 | `panthera_osint_sybil_oracle` | Autonomous Agent OSINT & Sybil risk oracle. |
+| 36 | `panthera_pre_trade_threat_oracle` | Pre-trade wallet poisoning, honeypot & malicious IP oracle for DeFi bots. |
 
 ---
 

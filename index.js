@@ -11,7 +11,7 @@ const { MCP_TOOLS, executeTool } = require('./src/tools');
 
 const SERVER_INFO = {
   name: 'panthera-x402-mcp',
-  version: '2.5.0'
+  version: '2.6.0'
 };
 
 /**

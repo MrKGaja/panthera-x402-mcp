@@ -1,7 +1,7 @@
 {
   "name": "panthera-x402-mcp",
-  "version": "2.5.0",
-  "description": "Panthera x402 v2 MCP Server — 22 pay-per-call AI agent tools on Solana Mainnet USDC: OpenAI chat completions, live web search, Solana JSON-RPC, URL-to-Markdown scraper, Solana tx simulator, SPL token rug-pull audit, honeypot threat-intel, and OSINT.",
+  "version": "2.6.0",
+  "description": "Panthera x402 v2 MCP Server — 36 pay-per-call & Code-Mode AI agent tools on Solana Mainnet USDC: OpenAI chat completions, Omni-Reach 12-channel reader, ReelSight social video unlocker, HydraSearch 4-engine swarm search, SkillShield OWASP auditor, Solana JSON-RPC, OSINT, and Dark Web intelligence.",
   "main": "index.js",
   "bin": {
     "panthera-x402-mcp": "./index.js"

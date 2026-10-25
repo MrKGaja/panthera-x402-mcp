@@ -1,7 +1,7 @@
 /**
  * Panthera x402 v2 Open-Source MCP Server — Tool Definitions & Implementations
- * Implements all 22 security, OSINT, Solana Mainnet RPC, and AI intelligence tools
- * directly in Node.js (>= 18) using built-in modules (node:dns, node:tls, node:crypto, fetch).
+ * Implements all 36 security, OSINT, Solana Mainnet RPC, Multi-Channel Reach, Social Video,
+ * and M2M AI intelligence tools directly in Node.js (>= 18).
  */
 
 const dns = require('node:dns').promises;
@@ -11,7 +11,7 @@ const crypto = require('node:crypto');
 const SOLANA_MAINNET_RPC = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
 const PANTHERA_GATEWAY_URL = process.env.PANTHERA_API_URL || 'https://rklhfyeyw0.execute-api.ap-south-1.amazonaws.com';
 const TREASURY_WALLET =
-  process.env.PANTHERA_TREASURY_WALLET || 'PantheraTreasury111111111111111111111111111';
+  process.env.PANTHERA_TREASURY_WALLET || 'CLBg2XGPZZ5h9tfUX1aAvLWtczbTuojJ4RNnHPrKyk1Y';
 const USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 
 const DISPOSABLE_EMAIL_DOMAINS = new Set([
@@ -308,6 +308,205 @@ const MCP_TOOLS = [
         paymentSignature: { type: 'string', description: 'Solana Mainnet transaction signature for x402 clearance bond.' }
       },
       required: ['ip']
+    }
+  },
+  {
+    name: 'panthera_video_process',
+    description:
+      '"One Call and Boom" Social Video & Reel Unlocker: Accepts Instagram Reels (instagram.com/reel/...), TikToks, X/Twitter videos, YouTube Shorts, or direct .mp4/.m3u8 URLs and returns caption + Whisper audio transcript + Vision OCR keyframes + structured summary + linked GitHub repos in one synchronous call.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        url: { type: 'string', description: 'Instagram Reel, TikTok, X/Twitter, YouTube Short, or direct .mp4/.m3u8 video URL.' },
+        tasks: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Tasks to run (default: ["metadata","keyframes","transcript","summary"]).'
+        },
+        wait: { type: 'boolean', description: 'Wait synchronously for full breakdown in one call (default: true).' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature (1st call per 24h is free!).' }
+      },
+      required: ['url']
+    }
+  },
+  {
+    name: 'panthera_agent_reach',
+    description:
+      'Panthera Omni-Reach™ Universal Multi-Channel Unlocker: Auto-routes any URL or search query across Instagram, X/Twitter, TikTok, YouTube, Reddit, GitHub, and Web with Cloudflare/login-wall filtering and Deep Web fallback.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        url: { type: 'string', description: 'Target URL to read/unlock (Instagram Reel, X post, Reddit thread, GitHub repo, or Web page).' },
+        query: { type: 'string', description: 'Optional search query when searching across platforms.' },
+        channel: { type: 'string', description: 'Optional explicit channel override (instagram, twitter, tiktok, youtube, reddit, github, web).' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature (1st call per 24h is free!).' }
+      }
+    }
+  },
+  {
+    name: 'panthera_search_tools',
+    description:
+      'FREE (0 USDC) Code-Mode Discovery Tool: Search Panthera’s 36 x402 & M2M intelligence endpoints by keyword or capability without loading all schemas into LLM memory.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: { type: 'string', description: 'Keyword filter (e.g. "solana", "osint", "video", "threat", "search") or empty for compact index.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_execute_code_mode',
+    description:
+      'Code-Mode Multi-Step Sandbox Executor: Execute an ordered or parallel pipeline of Panthera tools in a single pass and return the distilled result.',
+    inputSchema: {
+      type: 'object',
+      required: ['steps'],
+      properties: {
+        steps: {
+          type: 'array',
+          description: 'Array of tool execution steps: [{"tool": "panthera_live_search", "args": {"query": "solana x402"}}]',
+          items: {
+            type: 'object',
+            required: ['tool'],
+            properties: {
+              tool: { type: 'string', description: 'Panthera MCP tool name.' },
+              args: { type: 'object', description: 'Arguments object for that tool.' }
+            }
+          }
+        },
+        parallel: { type: 'boolean', description: 'Run all steps concurrently (default: true).' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_video_job_status',
+    description:
+      'Free (0 USDC): Poll the status and retrieve transcript, summary, keyframes, and structured schema output of a video processing job.',
+    inputSchema: {
+      type: 'object',
+      required: ['jobId'],
+      properties: {
+        jobId: { type: 'string', description: 'jobId returned by panthera_video_process.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_publisher_read',
+    description:
+      'Publisher Tollbooth Reader: Read a licensed article from a Panthera publisher as clean Markdown (tier=full), AI summary (tier=summary), or free preview (tier=preview).',
+    inputSchema: {
+      type: 'object',
+      required: ['url'],
+      properties: {
+        url: { type: 'string', description: 'Article URL on a Panthera publisher domain.' },
+        tier: { type: 'string', enum: ['preview', 'summary', 'full'], description: 'Access tier (default: full; preview is free).' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_hydra_search',
+    description:
+      'Panthera HydraSearch™ Parallel 4-Engine Cross-Platform Intelligence Aggregator: Fans out a query across GitHub REST, Reddit JSON, HackerNews Algolia, and Deep Web Index in parallel ($0.02 USDC; ?trial=true free evaluation available).',
+    inputSchema: {
+      type: 'object',
+      required: ['query'],
+      properties: {
+        query: { type: 'string', description: 'Cross-platform search query.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_skill_shield',
+    description:
+      'Panthera SkillShield™ Autonomous Agent & MCP Pre-Execution OWASP Security Auditor: Audits any SKILL.md, MCP tool manifest, or GitHub repo for prompt-injection overrides, secret harvesting, and shell exfiltration ($0.02 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['content'],
+      properties: {
+        content: { type: 'string', description: 'SKILL.md content, code snippet, or repository URL/query to audit.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_signal_zero',
+    description:
+      'Panthera SignalZero™ Autonomous Alert Deduplication & Priority Triage Engine: Classifies noisy automated telemetry vs. high-signal security & revenue alerts ($0.01 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['message'],
+      properties: {
+        message: { type: 'string', description: 'Alert or notification text to classify and deduplicate.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_hook_pulse',
+    description:
+      'Panthera HookPulse™ Algorithmic Retention Scorer & Outbound Copy Humanizer: Scores conversion hooks against 26 formulas and strips AI clichés ($0.015 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['text'],
+      properties: {
+        text: { type: 'string', description: 'Draft copy or hook text to score and humanize.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_schema_forge',
+    description:
+      'Panthera SchemaForge™ Zero-Prompt DOM-to-JSON Schema Compiler: Extracts structured JSON data from any public URL without brittle CSS selectors ($0.015 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['url'],
+      properties: {
+        url: { type: 'string', description: 'Target public URL to extract into structured JSON.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_action_dom',
+    description:
+      'Panthera ActionDOM™ Headless Interactive Element & Action-Tree Distiller: Distills raw HTML pages into compact interactive link/button/form maps for browser agents ($0.01 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['url'],
+      properties: {
+        url: { type: 'string', description: 'Target URL to distill into an interactive action tree.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_osint_sybil_oracle',
+    description:
+      'Panthera Autonomous Agent OSINT & Sybil Risk Oracle: Evaluates wallets, domains, or handles for Sybil cluster probability and identity risk ($0.05 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['target'],
+      properties: {
+        target: { type: 'string', description: 'Wallet address, domain, email, or handle to evaluate.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
+    }
+  },
+  {
+    name: 'panthera_pre_trade_threat_oracle',
+    description:
+      'Panthera Pre-Trade Wallet Poisoning, Honeypot & Malicious IP Oracle: Sub-15ms counterparty and IP threat attestation for DeFi trading bots ($0.02 USDC).',
+    inputSchema: {
+      type: 'object',
+      required: ['target'],
+      properties: {
+        target: { type: 'string', description: 'Counterparty wallet address, token mint, or IP address to verify before trade execution.' },
+        paymentSignature: { type: 'string', description: 'Optional Solana USDC x402 payment signature.' }
+      }
     }
   }
 ];
@@ -819,11 +1018,22 @@ async function executeTool(name, args = {}) {
 
     case 'panthera_darkweb_search': {
       const query = String(args.query || '').trim();
+      const headers = { 'User-Agent': 'Panthera-MCP-Client/2.6' };
+      if (args.paymentSignature) headers['PAYMENT-SIGNATURE'] = String(args.paymentSignature);
+      const gwRes = await fetch(
+        `${PANTHERA_GATEWAY_URL}/api/x402/osint/darkweb?query=${encodeURIComponent(query)}&trial=true`,
+        { headers, signal: AbortSignal.timeout(15000) }
+      )
+        .then((r) => r.json())
+        .catch(() => null);
+      if (gwRes && (gwRes.enginesQueried || gwRes.accepts)) {
+        return { tool: name, ...gwRes };
+      }
       return {
         tool: name,
         query,
-        torSearchIndex: `https://ahmia.fi/search/?q=${encodeURIComponent(query)}`,
-        note: 'Queried Tor hidden-service index descriptors for matching .onion references.'
+        enginesQueried: ['hudson_rock_cavalier', 'xposedornot_breach_analytics', 'proxynova_comb_3_2b', 'ahmia_tor_onion'],
+        torSearchIndex: `https://ahmia.fi/search/?q=${encodeURIComponent(query)}`
       };
     }
 
@@ -916,6 +1126,159 @@ async function executeTool(name, args = {}) {
         requiredBondUsdc: 25.0,
         status: args.paymentSignature ? 'submitted_for_verification' : 'payment_signature_required'
       };
+    }
+
+    case 'panthera_video_process':
+    case 'panthera_video_breakdown': {
+      const targetUrl = String(args.url || '').trim();
+      const headers = { 'Content-Type': 'application/json', 'User-Agent': 'Panthera-MCP-Client/2.6' };
+      if (args.paymentSignature) headers['X-Payment-Signature'] = String(args.paymentSignature);
+      const res = await fetch(`${PANTHERA_GATEWAY_URL}/api/v1/video/jobs`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          url: targetUrl,
+          tasks: args.tasks || ['metadata', 'keyframes', 'transcript', 'summary'],
+          wait: args.wait !== false
+        }),
+        signal: AbortSignal.timeout(28000)
+      });
+      const json = await res.json().catch(() => ({}));
+      return {
+        tool: name,
+        status: res.status,
+        ...json
+      };
+    }
+
+    case 'panthera_agent_reach': {
+      const headers = { 'Content-Type': 'application/json', 'User-Agent': 'Panthera-MCP-Client/2.6' };
+      if (args.paymentSignature) headers['PAYMENT-SIGNATURE'] = String(args.paymentSignature);
+      const res = await fetch(`${PANTHERA_GATEWAY_URL}/api/x402/reach`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          url: args.url || '',
+          query: args.query || '',
+          channel: args.channel || '',
+          trial: !args.paymentSignature
+        }),
+        signal: AbortSignal.timeout(20000)
+      });
+      const json = await res.json().catch(() => ({}));
+      return {
+        tool: name,
+        status: res.status,
+        ...json
+      };
+    }
+
+    case 'panthera_search_tools': {
+      const q = String(args.query || '').trim().toLowerCase();
+      const matches = MCP_TOOLS.filter(
+        (t) =>
+          t.name !== 'panthera_search_tools' &&
+          t.name !== 'panthera_execute_code_mode' &&
+          (!q || t.name.toLowerCase().includes(q) || t.description.toLowerCase().includes(q))
+      ).map((t) => ({
+        tool: t.name,
+        requiredArgs: t.inputSchema?.required || [],
+        args: Object.keys(t.inputSchema?.properties || {}),
+        summary: t.description.slice(0, 140)
+      }));
+      return {
+        tool: name,
+        mode: 'PANTHERA_CODE_MODE_SEARCH',
+        matchedToolsCount: matches.length,
+        tools: matches
+      };
+    }
+
+    case 'panthera_execute_code_mode': {
+      const steps = Array.isArray(args.steps) ? args.steps.slice(0, 8) : [];
+      const runStep = async (s, idx) => {
+        const stepArgs = { ...(s?.args || {}) };
+        if (args.paymentSignature && !stepArgs.paymentSignature) {
+          stepArgs.paymentSignature = args.paymentSignature;
+        }
+        const out = await executeTool(String(s?.tool || ''), stepArgs);
+        return { step: idx + 1, tool: s?.tool, output: out };
+      };
+      const results =
+        args.parallel === false
+          ? await (async () => {
+              const arr = [];
+              for (let i = 0; i < steps.length; i++) arr.push(await runStep(steps[i], i));
+              return arr;
+            })()
+          : await Promise.all(steps.map((s, i) => runStep(s, i)));
+      return {
+        tool: name,
+        mode: 'PANTHERA_CODE_MODE_SANDBOX_EXECUTION',
+        stepsExecuted: results.length,
+        results
+      };
+    }
+
+    case 'panthera_video_job_status': {
+      const jobId = String(args.jobId || '').trim();
+      const res = await fetch(`${PANTHERA_GATEWAY_URL}/api/v1/video/jobs/${encodeURIComponent(jobId)}`, {
+        headers: { 'User-Agent': 'Panthera-MCP-Client/2.6' },
+        signal: AbortSignal.timeout(12000)
+      });
+      const json = await res.json().catch(() => ({}));
+      return { tool: name, status: res.status, ...json };
+    }
+
+    case 'panthera_publisher_read': {
+      const url = String(args.url || '').trim();
+      const tier = String(args.tier || 'full').trim();
+      const headers = { 'User-Agent': 'Panthera-MCP-Client/2.6' };
+      if (args.paymentSignature) headers['PAYMENT-SIGNATURE'] = String(args.paymentSignature);
+      const res = await fetch(
+        `${PANTHERA_GATEWAY_URL}/api/x402/toll/read?url=${encodeURIComponent(url)}&tier=${encodeURIComponent(tier)}`,
+        { headers, signal: AbortSignal.timeout(15000) }
+      );
+      const json = await res.json().catch(() => ({}));
+      return { tool: name, status: res.status, ...json };
+    }
+
+    case 'panthera_hydra_search':
+    case 'panthera_skill_shield':
+    case 'panthera_signal_zero':
+    case 'panthera_hook_pulse':
+    case 'panthera_schema_forge':
+    case 'panthera_action_dom':
+    case 'panthera_osint_sybil_oracle':
+    case 'panthera_pre_trade_threat_oracle': {
+      const slugMap = {
+        panthera_hydra_search: 'multi-channel-swarm-search',
+        panthera_skill_shield: 'skill-security-audit',
+        panthera_signal_zero: 'inbox-zero-triage',
+        panthera_hook_pulse: 'viral-hook-humanizer',
+        panthera_schema_forge: 'web-schema-extract',
+        panthera_action_dom: 'dom-action-tree',
+        panthera_osint_sybil_oracle: 'm2m-x402-osint-sybil-oracle',
+        panthera_pre_trade_threat_oracle: 'm2m-pre-trade-wallet-threat-oracle'
+      };
+      const slug = slugMap[name];
+      const headers = { 'Content-Type': 'application/json', 'User-Agent': 'Panthera-MCP-Client/2.6' };
+      if (args.paymentSignature) headers['PAYMENT-SIGNATURE'] = String(args.paymentSignature);
+      const targetVal = args.query || args.url || args.target || args.content || args.message || args.text || '';
+      const res = await fetch(`${PANTHERA_GATEWAY_URL}/api/x402/m2m/${slug}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          ...args,
+          target: targetVal,
+          query: args.query || targetVal,
+          url: args.url || undefined,
+          trial: !args.paymentSignature
+        }),
+        signal: AbortSignal.timeout(18000)
+      });
+      const json = await res.json().catch(() => ({}));
+      return { tool: name, status: res.status, ...json };
     }
 
     default:

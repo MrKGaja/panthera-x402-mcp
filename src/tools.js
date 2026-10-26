@@ -408,7 +408,7 @@ const MCP_TOOLS = [
   {
     name: 'panthera_hydra_search',
     description:
-      'Panthera HydraSearch™ Parallel 4-Engine Cross-Platform Intelligence Aggregator: Fans out a query across GitHub REST, Reddit JSON, HackerNews Algolia, and Deep Web Index in parallel ($0.02 USDC; ?trial=true free evaluation available).',
+      'Panthera HydraSearch™ Parallel 4-Engine Cross-Platform Intelligence Aggregator: Fans out a query across GitHub REST, Reddit JSON, HackerNews Algolia, and Deep Web Index in parallel ($0.02 USDC).',
     inputSchema: {
       type: 'object',
       required: ['query'],
@@ -1021,7 +1021,7 @@ async function executeTool(name, args = {}) {
       const headers = { 'User-Agent': 'Panthera-MCP-Client/2.6' };
       if (args.paymentSignature) headers['PAYMENT-SIGNATURE'] = String(args.paymentSignature);
       const gwRes = await fetch(
-        `${PANTHERA_GATEWAY_URL}/api/x402/osint/darkweb?query=${encodeURIComponent(query)}&trial=true`,
+        `${PANTHERA_GATEWAY_URL}/api/x402/osint/darkweb?query=${encodeURIComponent(query)}`,
         { headers, signal: AbortSignal.timeout(15000) }
       )
         .then((r) => r.json())
@@ -1160,8 +1160,7 @@ async function executeTool(name, args = {}) {
         body: JSON.stringify({
           url: args.url || '',
           query: args.query || '',
-          channel: args.channel || '',
-          trial: !args.paymentSignature
+          channel: args.channel || ''
         }),
         signal: AbortSignal.timeout(20000)
       });
@@ -1272,8 +1271,7 @@ async function executeTool(name, args = {}) {
           ...args,
           target: targetVal,
           query: args.query || targetVal,
-          url: args.url || undefined,
-          trial: !args.paymentSignature
+          url: args.url || undefined
         }),
         signal: AbortSignal.timeout(18000)
       });
